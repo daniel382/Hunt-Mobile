@@ -2,7 +2,8 @@
 Created from Rocketseat [GoStack](https://rocketseat.com.br/bootcamp) Course
 
 ## Run instructions
-Download or clone this projetc
+Download or clone this projetc.
+
 Run:
 
 ```
