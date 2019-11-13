@@ -8,23 +8,38 @@ export default class Main extends Component {
         super(props)
 
         this.state = {
-            products: []
+            productInfo: {},
+            products: [],
+            page: 1
         }
 
         this.loadProducts = this.loadProducts.bind(this)
+        this.loadMore = this.loadMore.bind(this)
     }
     
     static navigationOptions = {
         title: "JSHunt"
     }
 
-    async loadProducts() {
+    async loadProducts(page = 1) {
         try {
-            const res = await api.get('/products')
-            this.setState({ products: res.data.docs })
+            const res = await api.get(`/products?page=${ page }`)
+            const { docs, ...productInfo } = res.data
+            const products = [...this.state.products, ...docs]
+
+            this.setState({ products, productInfo, page })
         } catch(err) {
             console.log(err)
         }
+    }
+
+    loadMore() {
+        const { page, productInfo } = this.state
+        if(page === productInfo.pages)
+            return
+        
+        const pageNumber = page + 1
+        this.loadProducts(pageNumber)
     }
 
     componentDidMount() {
@@ -50,6 +65,8 @@ export default class Main extends Component {
                     data={ this.state.products }
                     keyExtractor={ item => item._id }
                     renderItem={ this.renderItem }
+                    onEndReached={ this.loadMore }
+                    onEndReachedThreshold={ 0.1 } // percentual para o fim da lista [90% scrolado, 10% para acabar]
                 />
             </View>
         )
