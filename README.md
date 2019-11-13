@@ -7,6 +7,7 @@ Run:
 
 ```
 $cd Hunt-Mobile
-$yarn``` or ```npm install
-$yarn android``` or ```npm run android
-$yarn start``` or ```npm start```
+$yarn or npm install
+$yarn android or npm run android
+$yarn start or npm start
+```
